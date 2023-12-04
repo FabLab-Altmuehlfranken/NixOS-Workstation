@@ -5,9 +5,11 @@
     description = "FabLab AutoUpdater";
     wantedBy = [ "multi-user.target" ];
     script = ''
+      if [ -f /autoupdate-finished ]; then exit 0; fi
       rm -rf /etc/nixos
       git clone --depth=1 https://github.com/FabLab-Altmuehlfranken/NixOS-Workstation.git /etc/nixos
-      nixos-rebuild boot --upgrade
+      nixos-rebuild boot --flake '/etc/nixos#fablab'
+      touch /autoupdate-finished
     '';
     serviceConfig = {
       Type = "oneshot";

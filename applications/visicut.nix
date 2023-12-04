@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   pname = "VisiCut";
-  version = "1.9-173-gbc487d5e";
+  version = "1.9-205-gd98e82d0";
 
   src = fetchzip {
-    url = "https://download.visicut.org/files/master/All/${pname}-${version}.zip";
-    sha256 = "sha256-p0wnIKlnyhmclK9VvnT1BhaoXy0MIKGHC6/crJv93eA=";
+    url = "https://mirror.lewd.wtf/archive/visicut/${pname}-${version}.zip";
+    sha256 = "sha256-0PoQVx3Gs4yUsMMgBKUwQSE8Jw4d/fDqFd5MQv64fn4=";
   };
 
   nativeBuildInputs = [ makeWrapper wrapGAppsHook ];

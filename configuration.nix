@@ -13,6 +13,7 @@
       ./applications.nix
       ./autoupdate.nix
       ./printers.nix
+      ./fonts.nix
     ];
 
   # Bootloader.
@@ -20,7 +21,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "fablab"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;

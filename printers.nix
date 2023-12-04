@@ -18,5 +18,14 @@
         PageSize = "A4";
       };
     }
+    {
+      description = "Roland CAMM-1 GS-24";
+      deviceUri = "usb://Roland/GS-24?serial=A";
+      model = "raw";
+      name = "GS-24";
+      ppdOptions = {
+        PageSize = "A4";
+      };
+    }
   ];
 }
