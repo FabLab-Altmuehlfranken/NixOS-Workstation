@@ -1,0 +1,91 @@
+name: Update fetchGit repositories
+
+on:
+  push:
+
+  pull_request:
+
+  workflow_dispatch:
+
+  schedule:
+    # run three times a day
+    - cron: "0 4,12,20 * * *"
+
+jobs:
+  update-nix-fetchgit:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # for git push
+      contents: write
+      # to allow opening the PR
+      pull-requests: write
+
+    env:
+      BRANCH_NAME: "update-fetchgit"
+
+    steps:
+      - name: Install Nix
+        uses: cachix/install-nix-action@v25
+        with:
+          # seems to be needed for local act runner, should avoid rate limits
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install update-nix-fetchgit
+        run: |
+          nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+          nix-channel --update
+
+          nix-env -i update-nix-fetchgit
+
+      - uses: actions/checkout@v4
+        with:
+          ref: "${{ env.BRANCH_NAME }}"
+          # needed to be able to update the branch! default depth is 1! 0 means unlimited!
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config --global user.name "update-nix-fetchgit bot"
+          git config --global user.email "update-nix@fetchgit.bot"
+
+      - name: Update from master branch
+        run: |
+          if ! git pull --rebase origin master; then
+            echo "Rebase failed, merge-pulling"
+            git rebase --abort
+            git pull --no-rebase origin master
+          fi
+
+      - name: Check for updated hashes
+        run: |
+          update-nix-fetchgit homedir.nix
+          # for debugging
+          git diff
+
+      - name: Open PR if necessary
+        if: github.ref == 'refs/heads/master'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -x
+
+          # we use a single branch in parallel to ensure only one PR is active at a given time
+          # if the PR has not been merged yet and new changes are detected, the existing PR will be updated accordingly
+          if ! git diff --quiet --exit-code; then
+            # commit changes
+            git commit -m "Update fetchGit hashes" .
+
+            # push changes
+            git push --set-upstream origin "$BRANCH_NAME" -f
+          fi
+
+          # if needed, create new PR
+          git fetch -a
+          if ! git diff --quiet --exit-code "$BRANCH_NAME" origin/master; then
+            if ! gh pr list -H "$BRANCH_NAME" --json state | grep -q -i open; then
+              gh pr create -B master -H "$BRANCH_NAME" --title "update-nix-fetchgit" --body "Auto-created by GitHub actions"
+            else
+              echo "PR already open, push above should have updated it"
+            fi
+          fi
