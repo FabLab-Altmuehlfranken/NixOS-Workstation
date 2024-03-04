@@ -32,11 +32,12 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
-      - name: Configure binary cache
-        uses: cachix/cachix-action@v14
+      - name: Setup Attic cache
+        uses: ryanccn/attic-action@v0
         with:
-          name: fablab-altmuehlfranken
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          endpoint: https://attic.fablab-altmuehlfranken.de
+          cache: fablab
+          token: ${{ secrets.ATTIC_AUTH_TOKEN }}
 
       - name: Build configuration
         run: nix build .#nixosConfigurations.fablab.config.system.build.toplevel
