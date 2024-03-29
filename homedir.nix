@@ -12,7 +12,7 @@
     if [[ $(who | grep fablab) > 0 ]]; then exit 0; fi
     cp -r /etc/fablab/ /home
     rm -rf /home/fablab/.visicut
-    cp -r /etc/visicut-settings /home/fablab/.visicut
+    cp -Lr /etc/visicut-settings /home/fablab/.visicut
     chown -R fablab:users /home/fablab
     chmod -R u+w /home/fablab
   '';
