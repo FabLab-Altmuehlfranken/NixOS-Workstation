@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-OLDPATHS=$(cat /tmp/store-paths | jq -r '.[].path')
-NEWPATHS=$(nix path-info --all --json | jq -r '.[].path')
+OLDPATHS=$(cat /tmp/store-paths | jq -r 'keys | .[]')
+NEWPATHS=$(nix path-info --all --json | jq -r 'keys | .[]')
 
 PUSHPATHS=$(comm -13 <(printf '%s\n' "${OLDPATHS[@]}" | sort) <(printf '%s\n' "${NEWPATHS[@]}" | sort) | egrep -v '(.drv|.drv.chroot|.check|.lock)$')
 
