@@ -1,21 +1,25 @@
 #!/usr/bin/env bash
+set -eo pipefail
+
 OLDPATHS=$(cat /tmp/store-paths | jq -r 'keys | .[]')
 NEWPATHS=$(nix path-info --all --json | jq -r 'keys | .[]')
 
-PUSHPATHS=$(comm -13 <(printf '%s\n' "${OLDPATHS[@]}" | sort) <(printf '%s\n' "${NEWPATHS[@]}" | sort) | egrep -v '(.drv|.drv.chroot|.check|.lock)$')
+PUSHPATHS=$(comm -13 <(printf '%s\n' "${OLDPATHS[@]}" | sort) <(printf '%s\n' "${NEWPATHS[@]}" | sort) | grep -Ev '(.drv|.drv.chroot|.check|.lock)$')
 
-tries=0
-while IFS= read -r line; do
-    echo Pushing $line...
-    if attic push $CACHE $line ; then
-        tries=0
-    else
+function push_paths() {
+    tries=0
+    while [ $tries -lt 5 ]; do
+        if attic push "$CACHE" "$@" ; then
+            exit 0
+        fi
+
         tries=$((tries+1))
-    fi
+    done
 
-    if [ $tries -eq 5 ]; then
-        echo "Repeated failure while pushing to attic cache!"
-        exit 1
-    fi
-done <<< $PUSHPATHS
+    echo "Repeated failure while pushing to attic cache!"
+    exit 1
+}
 
+export -f push_paths
+
+echo "$PUSHPATHS" | xargs -L20 bash -c 'push_paths "$@"' {}
