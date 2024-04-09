@@ -14,6 +14,7 @@ function push_paths() {
         fi
 
         tries=$((tries+1))
+        sleep ${tries}m
     done
 
     echo "Repeated failure while pushing to attic cache!"
