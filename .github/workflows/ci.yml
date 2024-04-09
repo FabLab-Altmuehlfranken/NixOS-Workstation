@@ -40,3 +40,11 @@ jobs:
 
       - name: Build configuration
         run: nix build .#nixosConfigurations.fablab.config.system.build.toplevel
+
+  shellcheck:
+    runs-on: ubuntu-latest
+    name: Shellcheck
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
