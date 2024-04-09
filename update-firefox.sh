@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 function copy_file() {
-    rm -rf ./home/.mozilla/firefox/l5l2jvmz.default/$1
-    cp -r ~/.mozilla/firefox/l5l2jvmz.default/$1 ./home/.mozilla/firefox/l5l2jvmz.default/$1
+    rm -rf "./home/.mozilla/firefox/l5l2jvmz.default/$1"
+    cp -r ~/".mozilla/firefox/l5l2jvmz.default/$1" "./home/.mozilla/firefox/l5l2jvmz.default/$1"
 }
 
 copy_file addons.json
