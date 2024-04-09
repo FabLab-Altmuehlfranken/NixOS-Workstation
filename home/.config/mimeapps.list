@@ -1,5 +1,7 @@
 [Added Associations]
 image/svg+xml=org.inkscape.Inkscape.desktop;
+model/stl=PrusaSlicer.desktop;org.freecadweb.FreeCAD.desktop;
 
 [Default Applications]
 image/svg+xml=org.inkscape.Inkscape.desktop;
+model/stl=PrusaSlicer.desktop;
