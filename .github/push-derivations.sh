@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-OLDPATHS=$(cat /tmp/store-paths | jq -r 'keys | .[]')
+OLDPATHS=$(jq -r 'keys | .[]' < /tmp/store-paths)
 NEWPATHS=$(nix path-info --all --json | jq -r 'keys | .[]')
 
 PUSHPATHS=$(comm -13 <(printf '%s\n' "${OLDPATHS[@]}" | sort) <(printf '%s\n' "${NEWPATHS[@]}" | sort) | grep -Ev '(.drv|.drv.chroot|.check|.lock)$')
