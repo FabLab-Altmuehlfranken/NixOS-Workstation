@@ -27,12 +27,13 @@
             settings = {
               substituters = [
                 "https://cache.nixos.org"
-                "https://fablab-altmuehlfranken.cachix.org"
+                # Prioritize local attic cache when building system locally
+                "https://attic.fablab-altmuehlfranken.de/fablab?priority=10"
               ];
 
               trusted-public-keys = [
                 "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-                "fablab-altmuehlfranken.cachix.org-1:GcRkMyk//g8xxizM3rvvqgm95+JSDm0+dVpoBF+YB/c="
+                "fablab:Tb/JDq91JCPGrMeK2FAzY3F6/ot3n5abG+14f521jr4="
               ];
             };
           };
