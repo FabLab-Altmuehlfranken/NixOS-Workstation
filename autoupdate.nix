@@ -13,7 +13,7 @@
       git clone --depth=1 https://github.com/FabLab-Altmuehlfranken/NixOS-Workstation.git /etc/nixos
       nixos-rebuild boot --flake '/etc/nixos#fablab'
       touch /autoupdate-finished
-      if [ $(TZ=UTC date +%H) = 03 ]; then shutdown -hP now; fi
+      if [ $(TZ=UTC date '+%-H') = 03 ]; then shutdown -hP now; fi
     '';
     serviceConfig = {
       Type = "oneshot";
