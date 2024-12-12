@@ -9,7 +9,7 @@
     libreoffice
     openscad
     prusa-slicer
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
     (callPackage applications/visicut.nix { })
     yakuake
   ];
