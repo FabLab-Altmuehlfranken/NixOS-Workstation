@@ -21,7 +21,7 @@
     }
     {
       description = "Roland CAMM-1 GS-24";
-      deviceUri = "usb://Roland/GS-24?serial=A";
+      deviceUri = "http://schneidplotter.local:631/printers/Roland_GS-24";
       model = "raw";
       name = "GS-24";
       ppdOptions = {
