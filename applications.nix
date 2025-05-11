@@ -11,7 +11,7 @@
     prusa-slicer
     adwaita-icon-theme
     (callPackage applications/visicut.nix { })
-    yakuake
+    kdePackages.yakuake
   ];
 
   virtualisation.docker.enable = true;
