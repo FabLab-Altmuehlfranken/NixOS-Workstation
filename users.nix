@@ -11,7 +11,7 @@
     extraGroups = [ "dialout" "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       firefox
-      kate
+      kdePackages.kate
     ];
   };
 
