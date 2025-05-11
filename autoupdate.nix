@@ -11,7 +11,7 @@
       nix-collect-garbage --delete-older-than 30d
       rm -rf /etc/nixos
       git clone --depth=1 https://github.com/FabLab-Altmuehlfranken/NixOS-Workstation.git /etc/nixos
-      nixos-rebuild boot --flake '/etc/nixos#fablab'
+      nixos-rebuild boot --flake '/etc/nixos#'
       touch /autoupdate-finished
       if [ $(TZ=UTC date '+%-H') = 03 ]; then shutdown -hP now; fi
     '';
