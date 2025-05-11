@@ -3,7 +3,7 @@
   environment.systemPackages = with pkgs; [
     arduino
     freecad
-    gimp
+    gimp3
     inkcut
     inkstitch.hydraJobs.inkscape-inkstitch.x86_64-linux
     libreoffice
