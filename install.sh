@@ -25,5 +25,4 @@ swapon "${DISK}2"
 
 nix-shell -p git --run 'git clone --depth=1 https://github.com/FabLab-Altmuehlfranken/NixOS-Workstation.git /mnt/etc/nixos'
 
-nixos-install --no-root-passwd
-reboot
+nixos-install --no-root-passwd --flake /mnt/etc/nixos#fablab
