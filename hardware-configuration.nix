@@ -29,7 +29,7 @@
   };
 
   fileSystems."/home/fablab/Desktop/Netzlaufwerk" = {
-    device = "fabdrive.local:/mnt/HDDs/NAS/Public";
+    device = "omv.local:/Public";
     fsType = "nfs";
     options = [ "nfsvers=4.2" "x-systemd.automount" "noauto" ];
   };
