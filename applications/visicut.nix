@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchzip, makeWrapper, wrapGAppsHook, glib, jdk11 }:
+{ lib, stdenv, fetchzip, makeWrapper, wrapGAppsHook3, glib, jdk11 }:
 
 stdenv.mkDerivation rec {
   pname = "VisiCut";
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-gviwJYYNFLv9w27mLbti2BD+08pd1B/bEIluf11IVM8=";
   };
 
-  nativeBuildInputs = [ makeWrapper wrapGAppsHook ];
+  nativeBuildInputs = [ makeWrapper wrapGAppsHook3 ];
   buildInputs = [ glib jdk11 ];
 
   dontWrapGApps = true;
