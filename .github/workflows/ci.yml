@@ -37,7 +37,7 @@ jobs:
           TOKEN: ${{ secrets.ATTIC_AUTH_TOKEN }}
 
       - name: Snapshot state of nix store
-        run: nix path-info --all --json > /tmp/store-paths
+        run: nix path-info --all --json --json-format 1 > /tmp/store-paths
 
       - name: Build configuration
         run: nix build .#nixosConfigurations.fablab.config.system.build.toplevel
