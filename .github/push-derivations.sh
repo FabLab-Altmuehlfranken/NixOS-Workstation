@@ -2,7 +2,7 @@
 set -eo pipefail
 
 OLDPATHS=$(jq -r 'keys | .[]' < /tmp/store-paths)
-NEWPATHS=$(nix path-info --all --json | jq -r 'keys | .[]')
+NEWPATHS=$(nix path-info --all --json --json-format 1 | jq -r 'keys | .[]')
 
 PUSHPATHS=$(comm -13 <(printf '%s\n' "${OLDPATHS[@]}" | sort) <(printf '%s\n' "${NEWPATHS[@]}" | sort) | grep -Ev '(.drv|.drv.chroot|.check|.lock)$')
 
@@ -14,7 +14,7 @@ function push_paths() {
         fi
 
         tries=$((tries+1))
-        sleep ${tries}m
+        sleep "${tries}s"
     done
 
     echo "Repeated failure while pushing to attic cache!"

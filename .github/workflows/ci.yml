@@ -13,22 +13,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@v10
-        with:
-          build-mount-path: '/nix'
-          root-reserve-mb: 8192
-          swap-size-mb: 1024
-          remove-android: 'true'
-          remove-codeql: 'true'
-          remove-docker-images: 'true'
-          remove-dotnet: 'true'
-          remove-haskell: 'true'
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v20
+        uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
@@ -48,7 +37,7 @@ jobs:
           TOKEN: ${{ secrets.ATTIC_AUTH_TOKEN }}
 
       - name: Snapshot state of nix store
-        run: nix path-info --all --json > /tmp/store-paths
+        run: nix path-info --all --json --json-format 1 > /tmp/store-paths
 
       - name: Build configuration
         run: nix build .#nixosConfigurations.fablab.config.system.build.toplevel
@@ -62,6 +51,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Shellcheck
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master

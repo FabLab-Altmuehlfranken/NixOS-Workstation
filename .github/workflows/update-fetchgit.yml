@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Install Nix
-        uses: cachix/install-nix-action@v25
+        uses: cachix/install-nix-action@v31
         with:
           # seems to be needed for local act runner, should avoid rate limits
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
@@ -38,7 +38,7 @@ jobs:
 
           nix-env -i update-nix-fetchgit
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: "${{ env.BRANCH_NAME }}"
           # needed to be able to update the branch! default depth is 1! 0 means unlimited!

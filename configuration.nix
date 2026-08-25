@@ -110,12 +110,12 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  boot.initrd.extraUtilsCommands = ''
-    copy_bin_and_libs ${pkgs.e2fsprogs}/bin/mke2fs
-  '';
+  boot.initrd.systemd.enable = false;
+
   boot.initrd.postDeviceCommands = lib.mkAfter ''
-    mke2fs -t ext4 -F -L root /dev/disk/by-label/root
+    ${pkgs.e2fsprogs}/bin/mke2fs -t ext4 -F -L root /dev/disk/by-label/root
   '';
+
   boot.plymouth.enable = true;
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
