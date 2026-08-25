@@ -113,12 +113,8 @@
 
   boot.initrd.systemd.enable = false;
 
-  boot.initrd.systemd.extraBin = {
-    mke2fs = "${pkgs.e2fsprogs}/bin/mke2fs";
-  };
-
   boot.initrd.postDeviceCommands = lib.mkAfter ''
-    mke2fs -t ext4 -F -L root /dev/disk/by-label/root
+    ${pkgs.e2fsprogs}/bin/mke2fs -t ext4 -F -L root /dev/disk/by-label/root
   '';
 
   boot.plymouth.enable = true;
