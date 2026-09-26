@@ -5,7 +5,7 @@
   environment.etc.visicut-settings = {
     source = builtins.fetchGit {
       url = "https://git.fablab-altmuehlfranken.de/fablab/visicut-settings.git";
-      rev = "74d381e7a1d1ab94478662d4cf754166fbb418ad";
+      rev = "d13997d618a17e439abe5392c535f3c2721e0680";
     };
   };
   system.activationScripts.script.text = ''
